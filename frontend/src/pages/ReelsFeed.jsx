@@ -322,9 +322,9 @@ const ReelsFeed = () => {
         const mappedDbReels = dbReels.map(r => ({
           id: r.id,
           username: r.username,
-          avatar: r.avatar ? (r.avatar.startsWith('http') ? r.avatar : `http://127.0.0.1:8000${r.avatar}`) : null,
+          avatar: r.avatar ? (r.avatar.startsWith('http') ? r.avatar : `${import.meta.env.VITE_API_URL}${r.avatar}`) : null,
           caption: r.caption,
-          media: r.video ? (r.video.startsWith('http') ? r.video : `http://127.0.0.1:8000${r.video}`) : '',
+          media: r.video ? (r.video.startsWith('http') ? r.video : `${import.meta.env.VITE_API_URL}${r.video}`) : '',
           audio: `${r.username} · Original Audio`,
           likes: r.likes_count || 0,
           comments: r.comments_count || 0,
@@ -629,8 +629,8 @@ const ReelsFeed = () => {
         const otherMember = room.members?.find(m => m.username !== authUser?.username);
         const title = room.is_group ? room.title : (otherMember?.username || 'Chat');
         const avatar = room.is_group 
-          ? (room.avatar ? (room.avatar.startsWith('http') ? room.avatar : `http://127.0.0.1:8000${room.avatar}`) : null) 
-          : (otherMember?.avatar ? (otherMember.avatar.startsWith('http') ? otherMember.avatar : `http://127.0.0.1:8000${otherMember.avatar}`) : null);
+          ? (room.avatar ? (room.avatar.startsWith('http') ? room.avatar : `${import.meta.env.VITE_API_URL}${room.avatar}`) : null) 
+          : (otherMember?.avatar ? (otherMember.avatar.startsWith('http') ? otherMember.avatar : `${import.meta.env.VITE_API_URL}${otherMember.avatar}`) : null);
 
         return {
           id: room.id,
@@ -830,7 +830,7 @@ const ReelsFeed = () => {
                       {/* Avatar */}
                       {comment.avatar ? (
                         <img 
-                          src={comment.avatar.startsWith('http') ? comment.avatar : `http://127.0.0.1:8000${comment.avatar}`} 
+                          src={comment.avatar.startsWith('http') ? comment.avatar : `${import.meta.env.VITE_API_URL}${comment.avatar}`} 
                           alt="Commenter" 
                           className="w-8 h-8 rounded-full border border-obsidian-border object-cover flex-shrink-0"
                         />

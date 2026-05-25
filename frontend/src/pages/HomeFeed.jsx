@@ -389,7 +389,7 @@ const HomeFeed = () => {
     if (avatar.startsWith('http://') || avatar.startsWith('https://')) {
       return avatar;
     }
-    return `http://127.0.0.1:8000${avatar}`;
+    return `${import.meta.env.VITE_API_URL}${avatar}`;
   };
 
   const getMediaUrl = (fileUrl) => {
@@ -397,7 +397,7 @@ const HomeFeed = () => {
     if (fileUrl.startsWith('http://') || fileUrl.startsWith('https://')) {
       return fileUrl;
     }
-    return `http://127.0.0.1:8000${fileUrl}`;
+    return `${import.meta.env.VITE_API_URL}${fileUrl}`;
   };
 
   const myAvatarUrl = getAvatarUrl(user?.profile?.avatar);
@@ -438,9 +438,9 @@ const HomeFeed = () => {
       setReels(data.map(r => ({
         id: r.id,
         username: r.username,
-        avatar: r.avatar ? (r.avatar.startsWith('http') ? r.avatar : `http://127.0.0.1:8000${r.avatar}`) : null,
+        avatar: r.avatar ? (r.avatar.startsWith('http') ? r.avatar : `${import.meta.env.VITE_API_URL}${r.avatar}`) : null,
         caption: r.caption,
-        video: r.video ? (r.video.startsWith('http') ? r.video : `http://127.0.0.1:8000${r.video}`) : '',
+        video: r.video ? (r.video.startsWith('http') ? r.video : `${import.meta.env.VITE_API_URL}${r.video}`) : '',
         likes: r.likes_count || 0,
         comments: r.comments_count || 0,
         has_liked: r.has_liked || false,

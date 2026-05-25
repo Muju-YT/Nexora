@@ -104,7 +104,7 @@ const ChatWindow = () => {
 
   const getAvatarUrl = (url) => {
     if (!url) return null;
-    return url.startsWith('http') ? url : `http://127.0.0.1:8000${url}`;
+    return url.startsWith('http') ? url : `${import.meta.env.VITE_API_URL}${url}`;
   };
 
   const formatTime = (timeStr) => {

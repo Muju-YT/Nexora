@@ -74,7 +74,7 @@ const UserProfile = () => {
     if (avatar.startsWith('http://') || avatar.startsWith('https://')) {
       return avatar;
     }
-    return `http://127.0.0.1:8000${avatar}`;
+    return `${import.meta.env.VITE_API_URL}${avatar}`;
   };
 
   const getMediaUrl = (fileUrl) => {
@@ -82,7 +82,7 @@ const UserProfile = () => {
     if (fileUrl.startsWith('http://') || fileUrl.startsWith('https://')) {
       return fileUrl;
     }
-    return `http://127.0.0.1:8000${fileUrl}`;
+    return `${import.meta.env.VITE_API_URL}${fileUrl}`;
   };
 
   useEffect(() => {

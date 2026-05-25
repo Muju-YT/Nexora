@@ -280,7 +280,7 @@ const CreateStory = () => {
   const [posted, setPosted]           = useState(false);
 
   const myAvatarUrl = user?.profile?.avatar
-    ? (user.profile.avatar.startsWith('http') ? user.profile.avatar : `http://127.0.0.1:8000${user.profile.avatar}`)
+    ? (user.profile.avatar.startsWith('http') ? user.profile.avatar : `${import.meta.env.VITE_API_URL}${user.profile.avatar}`)
     : null;
   const myUsername  = user?.username || 'You';
   const myInitial   = myUsername[0]?.toUpperCase() || '?';

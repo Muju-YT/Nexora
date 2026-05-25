@@ -16,7 +16,7 @@ const SavedPosts = () => {
     if (fileUrl.startsWith('http://') || fileUrl.startsWith('https://')) {
       return fileUrl;
     }
-    return `http://127.0.0.1:8000${fileUrl}`;
+    return `${import.meta.env.VITE_API_URL}${fileUrl}`;
   };
 
   useEffect(() => {

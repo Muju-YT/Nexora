@@ -51,7 +51,9 @@ const useChatStore = create((set, get) => ({
       currentSocket.close();
     }
 
-    const wsUrl = `ws://127.0.0.1:8000/ws/chat/${roomId}/`;
+    const baseApiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+    const wsBase = baseApiUrl.replace(/^http/, 'ws');
+    const wsUrl = `${wsBase}/ws/chat/${roomId}/`;
     const socket = new WebSocket(wsUrl);
 
     socket.onopen = () => {

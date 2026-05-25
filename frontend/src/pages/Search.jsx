@@ -18,7 +18,7 @@ const Search = () => {
     if (avatar.startsWith('http://') || avatar.startsWith('https://')) {
       return avatar;
     }
-    return `http://127.0.0.1:8000${avatar}`;
+    return `${import.meta.env.VITE_API_URL}${avatar}`;
   };
 
   useEffect(() => {

@@ -39,7 +39,7 @@ const StoriesViewer = () => {
 
   const getUrl = (url) => {
     if (!url) return '';
-    return url.startsWith('http') ? url : `http://127.0.0.1:8000${url}`;
+    return url.startsWith('http') ? url : `${import.meta.env.VITE_API_URL}${url}`;
   };
 
   const myUsername = user?.username || '';
