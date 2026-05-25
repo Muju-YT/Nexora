@@ -1,3 +1,4 @@
+import dj_database_url
 import os
 from pathlib import Path
 from datetime import timedelta
@@ -86,36 +87,12 @@ WSGI_APPLICATION = 'nexora_backend.wsgi.application'
 ASGI_APPLICATION = 'nexora_backend.asgi.application'
 
 # Database Setup: Attempt MySQL, fall back to SQLite if config or connection is unavailable
-DB_ENGINE = os.getenv('DB_ENGINE', 'mysql')
-DB_NAME = os.getenv('DB_NAME', 'nexora_db')
-DB_USER = os.getenv('DB_USER', 'root')
-DB_PASSWORD = os.getenv('DB_PASSWORD', '')
-DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
-DB_PORT = os.getenv('DB_PORT', '3306')
 
-if DB_ENGINE == 'mysql' and DB_PASSWORD:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': DB_NAME,
-            'USER': DB_USER,
-            'PASSWORD': DB_PASSWORD,
-            'HOST': DB_HOST,
-            'PORT': DB_PORT,
-            'OPTIONS': {
-                'charset': 'utf8mb4',
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            }
-        }
-    }
-else:
-    # Resilient fallback so that execution compiles and tests successfully out of the box
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+DATABASES = {
+    'default': dj_database_url.parse(
+        os.getenv('DATABASE_URL')
+    )
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
