@@ -1,0 +1,254 @@
+@import "tailwindcss";
+
+:root {
+  --obsidian-bg: #000000;
+  --obsidian-card-bg: #0F0F0F;
+  --obsidian-border-color: #262626;
+  --obsidian-light-bg: #1A1A1A;
+  --text-main: #FFFFFF;
+  --text-muted: #A8A8A8;
+  
+  --brand-gradient: linear-gradient(45deg, #FCAF45, #E1306C, #C13584, #833AB4);
+  --brand-gradient-hover: linear-gradient(45deg, #FFB959, #FF4581, #D84BA2, #9950CB);
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  color-scheme: dark;
+}
+
+.light {
+  --obsidian-bg: #FFFFFF;
+  --obsidian-card-bg: #FFFFFF;
+  --obsidian-border-color: #DBDBDB;
+  --obsidian-light-bg: #F0F2F5;
+  --text-main: #000000;
+  --text-muted: #737373;
+  
+  color-scheme: light;
+}
+
+@theme {
+  --color-obsidian: var(--obsidian-bg);
+  --color-obsidian-card: var(--obsidian-card-bg);
+  --color-obsidian-border: var(--obsidian-border-color);
+  --color-obsidian-light: var(--obsidian-light-bg);
+
+  --color-cyber-violet: #C13584; /* Replaced neon purple with Brand Violet */
+  --color-cyber-cyan: #0095F6; /* Replaced neon cyan with Social Blue */
+  --color-cyber-emerald: #10B981;
+  --color-cyber-pink: #E1306C; /* Brand Pink */
+  --color-cyber-amber: #FCAF45; /* Brand Amber */
+  --color-cyber-glow: #833AB4;
+  
+  --shadow-neon-violet: 0 4px 12px rgba(193, 53, 132, 0.15);
+  --shadow-neon-cyan: 0 4px 12px rgba(0, 149, 246, 0.15);
+  --shadow-neon-pink: 0 4px 12px rgba(225, 48, 108, 0.15);
+  --shadow-glass: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-glass-hover: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--obsidian-bg);
+  color: var(--text-main);
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Strict Light mode text overrides */
+.light :not(.forced-dark):not(.forced-dark *).text-white,
+.light :not(.forced-dark):not(.forced-dark *).text-slate-50,
+.light :not(.forced-dark):not(.forced-dark *).text-slate-100,
+.light :not(.forced-dark):not(.forced-dark *).text-slate-200 {
+  color: #000000 !important;
+}
+.light :not(.forced-dark):not(.forced-dark *).text-slate-300,
+.light :not(.forced-dark):not(.forced-dark *).text-slate-400 {
+  color: #262626 !important;
+}
+.light :not(.forced-dark):not(.forced-dark *).text-slate-500 {
+  color: #737373 !important;
+}
+.light :not(.forced-dark) > h1,
+.light :not(.forced-dark) > h2,
+.light :not(.forced-dark) > h3,
+.light :not(.forced-dark) > h4,
+.light :not(.forced-dark) > h5 {
+  color: #000000 !important;
+}
+
+/* Prevent Light mode overrides inside forced-dark containers */
+.light .forced-dark {
+  --obsidian-bg: #000000;
+  --obsidian-card-bg: #0F0F0F;
+  --obsidian-border-color: #262626;
+  --obsidian-light-bg: #1A1A1A;
+  --text-main: #FFFFFF;
+  --text-muted: #A8A8A8;
+  color-scheme: dark;
+}
+
+.light .forced-dark .text-white,
+.light .forced-dark .text-slate-50,
+.light .forced-dark .text-slate-100,
+.light .forced-dark .text-slate-200 {
+  color: #FFFFFF !important;
+}
+.light .forced-dark .text-slate-300 {
+  color: #cbd5e1 !important;
+}
+.light .forced-dark .text-slate-400 {
+  color: #94a3b8 !important;
+}
+.light .forced-dark .text-slate-500 {
+  color: #64748b !important;
+}
+.light .forced-dark h1,
+.light .forced-dark h2,
+.light .forced-dark h3,
+.light .forced-dark h4,
+.light .forced-dark h5 {
+  color: #FFFFFF !important;
+}
+/* Input text & placeholder inside forced-dark */
+.light .forced-dark input,
+.light .forced-dark textarea {
+  color: #FFFFFF !important;
+}
+.light .forced-dark input::placeholder,
+.light .forced-dark textarea::placeholder {
+  color: #64748b !important;
+}
+
+/* Always white / slate text overrides for dark-themed overlays */
+.text-always-white {
+  color: #ffffff !important;
+}
+.text-always-slate-100 {
+  color: #f1f5f9 !important;
+}
+.text-always-slate-200 {
+  color: #e2e8f0 !important;
+}
+.text-always-slate-300 {
+  color: #cbd5e1 !important;
+}
+.text-always-slate-400 {
+  color: #94a3b8 !important;
+}
+.text-always-slate-500 {
+  color: #64748b !important;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.2);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(150, 150, 150, 0.4);
+}
+
+@utility glass-panel {
+  background: var(--obsidian-card-bg);
+  border: 1px solid var(--obsidian-border-color);
+}
+
+@utility glass-card {
+  background: var(--obsidian-card-bg);
+  border: 1px solid var(--obsidian-border-color);
+  border-radius: 16px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@utility glass-input {
+  background: var(--obsidian-bg);
+  border: 1px solid var(--obsidian-border-color);
+  color: var(--text-main);
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.light .glass-input {
+  background: #FAFAFA;
+}
+
+@utility text-glow-violet {
+  text-shadow: none;
+}
+
+.light .text-glow-violet {
+  text-shadow: none;
+}
+
+@utility text-glow-cyan {
+  text-shadow: none;
+}
+
+@utility floating-nav {
+  background: var(--obsidian-card-bg);
+  border-top: 1px solid var(--obsidian-border-color);
+}
+
+.light .floating-nav {
+  background: #FFFFFF;
+  border-top: 1px solid #DBDBDB;
+  box-shadow: 0 -1px 8px rgba(0,0,0,0.03);
+}
+
+/* Background grid overlay - neutral content first, no cyber grids */
+.bg-grid-cyber {
+  background-color: var(--obsidian-bg);
+}
+.light .bg-grid-cyber {
+  background-color: #FFFFFF;
+}
+
+/* Premium Music Bouncing Visualizer Bars */
+@keyframes music-bar-1 {
+  0%, 100% { height: 30%; }
+  50% { height: 100%; }
+}
+@keyframes music-bar-2 {
+  0%, 100% { height: 45%; }
+  50% { height: 95%; }
+}
+@keyframes music-bar-3 {
+  0%, 100% { height: 20%; }
+  50% { height: 75%; }
+}
+
+.animate-music-bar-1 {
+  animation: music-bar-1 0.7s ease-in-out infinite;
+}
+.animate-music-bar-2 {
+  animation: music-bar-2 0.7s ease-in-out infinite 0.15s;
+}
+.animate-music-bar-3 {
+  animation: music-bar-3 0.7s ease-in-out infinite 0.3s;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+@utility reels-overlay-padding {
+  padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+}
+
+
