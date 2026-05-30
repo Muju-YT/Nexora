@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 from datetime import timedelta
 import pymysql
+import dotenv
 
 # Install PyMySQL as MySQLdb for Django compatibility on Windows
 pymysql.install_as_MySQLdb()
@@ -11,7 +12,6 @@ pymysql.install_as_MySQLdb()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Load environment variables from .env
-import dotenv
 dotenv.load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -172,7 +172,9 @@ SIMPLE_JWT = {
 }
 
 # CORS settings
-CORS_ALLOW_ALL_ORIGINS = True  # In production, specify actual hosts
+CORS_ALLOWED_ORIGINS = [
+    "https://nexora-theta-lovat.vercel.app",
+]# In production, specify actual hosts
 CORS_ALLOW_CREDENTIALS = True
 
 # WebSocket / Channel Layers configuration
