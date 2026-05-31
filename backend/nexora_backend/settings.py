@@ -20,10 +20,12 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-nexora-futuristic-super-se
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.getenv(
-    'ALLOWED_HOSTS',
-    '127.0.0.1,localhost'
-).split(',')
+ALLOWED_HOSTS = [
+    "nexora-backend-0796.onrender.com",
+    ".onrender.com",
+    "127.0.0.1",
+    "localhost"
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -213,5 +215,8 @@ CELERY_TIMEZONE = TIME_ZONE
 CSRF_TRUSTED_ORIGINS = [
     "https://nexora-backend-0796.onrender.com"
 ]
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
