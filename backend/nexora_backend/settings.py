@@ -20,7 +20,10 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-nexora-futuristic-super-se
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
+ALLOWED_HOSTS = os.getenv(
+    'ALLOWED_HOSTS',
+    '127.0.0.1,localhost'
+).split(',')
 
 # Application definition
 INSTALLED_APPS = [
@@ -90,8 +93,9 @@ ASGI_APPLICATION = 'nexora_backend.asgi.application'
 # Database Setup: Attempt MySQL, fall back to SQLite if config or connection is unavailable
 
 DATABASES = {
-    'default': dj_database_url.parse(
-        os.getenv('DATABASE_URL')
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'),
+        conn_max_age=600
     )
 }
 
@@ -129,6 +133,7 @@ USE_TZ = True
 # Static & Media Files
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = []
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
