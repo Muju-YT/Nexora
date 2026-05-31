@@ -1,19 +1,22 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User, Profile
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+
+from django.contrib.auth.models import Group
+
+admin.site.unregister(Group)
 
 
-# Custom User Admin (recommended for AbstractBaseUser)
 class UserAdmin(BaseUserAdmin):
-    list_display = ('email', 'username', 'is_staff', 'is_active', 'is_email_verified')
+    model = User
+    list_display = ('email', 'username', 'is_staff', 'is_active')
+    list_filter = ('is_staff', 'is_active')
     search_fields = ('email', 'username')
     ordering = ('email',)
 
     fieldsets = (
         (None, {'fields': ('email', 'username', 'password')}),
-        ('Personal Info', {'fields': ('first_name', 'last_name')}),
-        ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser')}),
-        ('Extra Info', {'fields': ('is_email_verified', 'otp_code', 'otp_created_at', 'last_activity')}),
+        ('Permissions', {'fields': ('is_staff', 'is_active')}),
     )
 
     add_fieldsets = (
@@ -24,16 +27,11 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
-# Register User properly
 admin.site.register(User, UserAdmin)
 
 
-# Safe Profile Admin (avoid crash in production)
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'is_verified', 'created_at')
     search_fields = ('user__email', 'user__username')
-    list_filter = ('is_verified',)
-
-    # IMPORTANT: prevents admin crash from heavy relations
     exclude = ('followers', 'blocked_users', 'muted_users')
