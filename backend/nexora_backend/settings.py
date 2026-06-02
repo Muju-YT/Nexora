@@ -180,7 +180,7 @@ SIMPLE_JWT = {
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
-    "https://nexora-theta-lovat.vercel.app",
+    "https://nexora-social-omega.vercel.app",
 ]# In production, specify actual hosts
 CORS_ALLOW_CREDENTIALS = True
 
@@ -213,7 +213,8 @@ CELERY_TIMEZONE = TIME_ZONE
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://nexora-backend-0796.onrender.com"
+    "https://nexora-social-omega.vercel.app",
+    "https://nexora-backend-9ivc.onrender.com",
 ]
 
 CSRF_COOKIE_SECURE = True
