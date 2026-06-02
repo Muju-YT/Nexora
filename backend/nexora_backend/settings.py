@@ -21,7 +21,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-nexora-futuristic-super-se
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = [
-    "nexora-backend-0796.onrender.com",
+    "nexora-backend-9ivc.onrender.com",
     ".onrender.com",
     "127.0.0.1",
     "localhost"
