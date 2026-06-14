@@ -179,11 +179,16 @@ SIMPLE_JWT = {
 }
 
 # CORS settings
+from corsheaders.defaults import default_headers
+
 CORS_ALLOWED_ORIGINS = [
     "https://nexora-social-omega.vercel.app",
     "https://nexora-social-git-main-muju-yts-projects.vercel.app",
-]# In production, specify actual hosts
+]
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "cache-control",
+]
 
 # WebSocket / Channel Layers configuration
 # Robust setup: try to use Redis if environment var is set, else use InMemory
