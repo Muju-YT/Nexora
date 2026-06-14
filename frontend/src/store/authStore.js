@@ -4,7 +4,11 @@ import api from '../services/api';
 const useAuthStore = create((set, get) => ({
   user: null,
   isAuthenticated: false,
+<<<<<<< HEAD
   loading: !!localStorage.getItem('access_token'),
+=======
+  loading: false,
+>>>>>>> b39beae135e620af13b6c803a1f41c8c91d0b874
   error: null,
   otpPending: false,
   otpPreview: null,
@@ -94,6 +98,7 @@ const useAuthStore = create((set, get) => ({
       get().fetchUnreadCounts();
       return { success: true };
     } catch (err) {
+<<<<<<< HEAD
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
       let errorMessage = 'Invalid credentials or login failed.';
@@ -107,6 +112,9 @@ const useAuthStore = create((set, get) => ({
         errorMessage = 'Internal server error. Please try again later.';
       }
       set({ error: errorMessage, loading: false });
+=======
+      set({ error: 'Invalid credentials or login failed.', loading: false });
+>>>>>>> b39beae135e620af13b6c803a1f41c8c91d0b874
       return { success: false };
     }
   },
@@ -141,6 +149,7 @@ const useAuthStore = create((set, get) => ({
   // Load the real session from the backend on every app mount
   loadSession: async () => {
     const token = localStorage.getItem('access_token');
+<<<<<<< HEAD
     if (!token) {
       set({ isAuthenticated: false, loading: false });
       return;
@@ -159,6 +168,21 @@ const useAuthStore = create((set, get) => ({
         // Keep tokens for retry if it was a network timeout or temporary server issue
         set({ isAuthenticated: false, loading: false });
       }
+=======
+    if (!token) return;
+    set({ loading: true });
+    try {
+      const res = await api.get('/auth/me/');
+      // Add a premium 3.5s delay so the user sees the login page first before smooth navigation
+      await new Promise(resolve => setTimeout(resolve, 3500));
+      set({ user: res.data, isAuthenticated: true, loading: false });
+      get().fetchUnreadCounts();
+    } catch (err) {
+      // Token invalid or expired — clear and redirect to login
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      set({ user: null, isAuthenticated: false, loading: false });
+>>>>>>> b39beae135e620af13b6c803a1f41c8c91d0b874
     }
   },
 

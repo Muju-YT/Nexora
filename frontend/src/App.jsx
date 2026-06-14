@@ -36,6 +36,12 @@ const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuthStore();
 
   if (loading) {
+<<<<<<< HEAD
+=======
+    if (window.location.pathname === '/') {
+      return <Login />;
+    }
+>>>>>>> b39beae135e620af13b6c803a1f41c8c91d0b874
     return (
       <div className="min-h-screen flex items-center justify-center bg-obsidian text-slate-100 bg-grid-cyber">
         <div className="flex flex-col items-center gap-4">
@@ -55,8 +61,16 @@ const AnimatedRoutes = () => {
   const { isAuthenticated, loadSession, theme, setTheme } = useAuthStore();
 
   useEffect(() => {
+<<<<<<< HEAD
     loadSession();
   }, [loadSession]);
+=======
+    // Clear previous sessions to always present the login page first on link load
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    useAuthStore.setState({ user: null, isAuthenticated: false, loading: false });
+  }, []);
+>>>>>>> b39beae135e620af13b6c803a1f41c8c91d0b874
 
   // Sync theme class with document element
   useEffect(() => {

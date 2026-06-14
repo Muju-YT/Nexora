@@ -97,7 +97,11 @@ ASGI_APPLICATION = 'nexora_backend.asgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         default=os.getenv('DATABASE_URL'),
+<<<<<<< HEAD
         conn_max_age=0
+=======
+        conn_max_age=600
+>>>>>>> b39beae135e620af13b6c803a1f41c8c91d0b874
     )
 }
 
