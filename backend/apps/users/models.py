@@ -76,7 +76,6 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user.username}\'s profile'
-<<<<<<< HEAD
 
 
 # Signals to automatically create Profile when a User is created
@@ -86,6 +85,3 @@ from django.dispatch import receiver
 @receiver(post_save, sender=User)
 def create_or_save_user_profile(sender, instance, created, **kwargs):
     Profile.objects.get_or_create(user=instance)
-
-=======
->>>>>>> b39beae135e620af13b6c803a1f41c8c91d0b874

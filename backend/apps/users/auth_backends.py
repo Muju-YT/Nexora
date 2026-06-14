@@ -1,14 +1,8 @@
-<<<<<<< HEAD
 import time
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from django.db import connection, InterfaceError, OperationalError
-=======
-from django.contrib.auth import get_user_model
-from django.contrib.auth.backends import ModelBackend
-from django.db.models import Q
->>>>>>> b39beae135e620af13b6c803a1f41c8c91d0b874
 
 User = get_user_model()
 
@@ -20,7 +14,6 @@ class EmailOrUsernameModelBackend(ModelBackend):
         if not username:
             return None
             
-<<<<<<< HEAD
         user = None
         for attempt in range(3):
             try:
@@ -38,16 +31,5 @@ class EmailOrUsernameModelBackend(ModelBackend):
                 time.sleep(0.5)
             
         if user and user.check_password(password) and self.user_can_authenticate(user):
-=======
-        try:
-            # Query case-insensitively for either username or email matches
-            user = User.objects.get(Q(username__iexact=username) | Q(email__iexact=username))
-        except User.DoesNotExist:
-            # Run password hasher to prevent timing attacks
-            User().set_password(password)
-            return None
-            
-        if user.check_password(password) and self.user_can_authenticate(user):
->>>>>>> b39beae135e620af13b6c803a1f41c8c91d0b874
             return user
         return None
