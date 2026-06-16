@@ -1,10 +1,13 @@
 from rest_framework import serializers
 from .models import Post, PostMedia, Like, Comment, SavedPost, Poll, PollOption, PollVote
 from django.contrib.auth import get_user_model
+from nexora_backend.utils import AbsoluteFileField, AbsoluteImageField
 
 User = get_user_model()
 
 class PostMediaSerializer(serializers.ModelSerializer):
+    file = AbsoluteFileField()
+
     class Meta:
         model = PostMedia
         fields = ['id', 'file', 'file_type', 'order']
@@ -42,7 +45,7 @@ class PollSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
-    avatar = serializers.ImageField(source='user.profile.avatar', read_only=True)
+    avatar = AbsoluteImageField(source='user.profile.avatar', read_only=True)
     replies_count = serializers.SerializerMethodField()
 
     class Meta:
@@ -55,13 +58,14 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
-    avatar = serializers.ImageField(source='user.profile.avatar', read_only=True)
+    avatar = AbsoluteImageField(source='user.profile.avatar', read_only=True)
     media = PostMediaSerializer(many=True, read_only=True)
     poll = PollSerializer(read_only=True)
     likes_count = serializers.SerializerMethodField()
     comments_count = serializers.SerializerMethodField()
     has_liked = serializers.SerializerMethodField()
     has_saved = serializers.SerializerMethodField()
+    music_file = AbsoluteFileField(read_only=True)
 
     class Meta:
         model = Post

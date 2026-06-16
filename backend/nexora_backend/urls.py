@@ -40,13 +40,26 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
 from django.views.static import serve
 from django.urls import re_path
+from django.http import Http404, HttpResponse
+
+def serve_with_cors(request, path, document_root=None, show_indexes=False):
+    try:
+        response = serve(request, path, document_root=document_root, show_indexes=show_indexes)
+    except Http404:
+        # Prevent ERR_BLOCKED_BY_ORB on Chrome by returning a valid empty 404 response
+        # with CORS header rather than Django's default HTML 404 error page.
+        response = HttpResponse(status=404, content_type="image/jpeg")
+        
+    response["Access-Control-Allow-Origin"] = "https://nexora-social-omega.vercel.app"
+    response["Access-Control-Allow-Headers"] = "accept, authorization, content-type, origin"
+    response["Access-Control-Allow-Methods"] = "GET, OPTIONS, HEAD"
+    return response
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += [
-    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    re_path(r'^media/(?P<path>.*)$', serve_with_cors, {'document_root': settings.MEDIA_ROOT}),
 ]

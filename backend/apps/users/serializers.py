@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from .models import Profile
+from nexora_backend.utils import AbsoluteImageField
 
 User = get_user_model()
 
@@ -10,6 +11,8 @@ class ProfileSerializer(serializers.ModelSerializer):
     followers_count = serializers.SerializerMethodField()
     following_count = serializers.SerializerMethodField()
     followers_usernames = serializers.SerializerMethodField()
+    avatar = AbsoluteImageField(required=False, allow_null=True)
+    cover_photo = AbsoluteImageField(required=False, allow_null=True)
 
     class Meta:
         model = Profile

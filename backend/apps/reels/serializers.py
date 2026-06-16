@@ -1,9 +1,10 @@
 from rest_framework import serializers
 from .models import Reel, ReelLike, ReelComment, SavedReel
+from nexora_backend.utils import AbsoluteFileField, AbsoluteImageField
 
 class ReelCommentSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
-    avatar = serializers.ImageField(source='user.profile.avatar', read_only=True)
+    avatar = AbsoluteImageField(source='user.profile.avatar', read_only=True)
 
     class Meta:
         model = ReelComment
@@ -12,7 +13,8 @@ class ReelCommentSerializer(serializers.ModelSerializer):
 
 class ReelSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
-    avatar = serializers.ImageField(source='user.profile.avatar', read_only=True)
+    avatar = AbsoluteImageField(source='user.profile.avatar', read_only=True)
+    video = AbsoluteFileField()
     likes_count = serializers.SerializerMethodField()
     comments_count = serializers.SerializerMethodField()
     has_liked = serializers.SerializerMethodField()

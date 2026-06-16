@@ -1,9 +1,10 @@
 from rest_framework import serializers
 from .models import Story, StoryViewer, StoryReaction
+from nexora_backend.utils import AbsoluteFileField, AbsoluteImageField
 
 class StoryViewerSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
-    avatar = serializers.ImageField(source='user.profile.avatar', read_only=True)
+    avatar = AbsoluteImageField(source='user.profile.avatar', read_only=True)
 
     class Meta:
         model = StoryViewer
@@ -20,7 +21,8 @@ class StoryReactionSerializer(serializers.ModelSerializer):
 
 class StorySerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
-    avatar = serializers.ImageField(source='user.profile.avatar', read_only=True)
+    avatar = AbsoluteImageField(source='user.profile.avatar', read_only=True)
+    media = AbsoluteFileField()
     viewers = StoryViewerSerializer(many=True, read_only=True)
     reactions = StoryReactionSerializer(many=True, read_only=True)
     viewers_count = serializers.SerializerMethodField()

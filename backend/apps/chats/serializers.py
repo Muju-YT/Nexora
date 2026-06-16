@@ -1,9 +1,10 @@
 from rest_framework import serializers
 from .models import ChatRoom, ChatMember, Message, MessageReaction
+from nexora_backend.utils import AbsoluteFileField, AbsoluteImageField
 
 class ChatMemberSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
-    avatar = serializers.ImageField(source='user.profile.avatar', read_only=True)
+    avatar = AbsoluteImageField(source='user.profile.avatar', read_only=True)
     is_online = serializers.BooleanField(source='user.is_online', read_only=True)
     last_activity = serializers.DateTimeField(source='user.last_activity', read_only=True)
 
@@ -22,7 +23,8 @@ class MessageReactionSerializer(serializers.ModelSerializer):
 
 class MessageSerializer(serializers.ModelSerializer):
     sender_username = serializers.CharField(source='sender.username', read_only=True)
-    sender_avatar = serializers.ImageField(source='sender.profile.avatar', read_only=True)
+    sender_avatar = AbsoluteImageField(source='sender.profile.avatar', read_only=True)
+    media_file = AbsoluteFileField(required=False, allow_null=True)
     reactions = MessageReactionSerializer(many=True, read_only=True)
     seen_by_usernames = serializers.SlugRelatedField(
         many=True, read_only=True, slug_field='username', source='seen_by'
@@ -41,6 +43,7 @@ class ChatRoomSerializer(serializers.ModelSerializer):
     members = ChatMemberSerializer(many=True, read_only=True)
     last_message = serializers.SerializerMethodField()
     unread_count = serializers.SerializerMethodField()
+    avatar = AbsoluteImageField(required=False, allow_null=True)
 
     class Meta:
         model = ChatRoom
