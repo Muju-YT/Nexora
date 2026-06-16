@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Search as SearchIcon, CheckCircle2, Hash, ArrowLeft, User } from 'lucide-react';
 import api from '../services/api';
 import useAuthStore from '../store/authStore';
+import { getAvatarUrl } from '../utils/url';
 import GlowCard from '../components/GlowCard';
 
 const Search = () => {
@@ -12,14 +13,6 @@ const Search = () => {
   const [profiles, setProfiles] = useState([]);
   const [followedStatus, setFollowedStatus] = useState({});
   const [loading, setLoading] = useState(true);
-
-  const getAvatarUrl = (avatar) => {
-    if (!avatar) return null;
-    if (avatar.startsWith('http://') || avatar.startsWith('https://')) {
-      return avatar;
-    }
-    return `${import.meta.env.VITE_API_URL}${avatar}`;
-  };
 
   useEffect(() => {
     const fetchProfiles = async () => {

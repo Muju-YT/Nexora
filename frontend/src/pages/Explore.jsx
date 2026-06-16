@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Heart, MessageCircle, Play, Compass, Search, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../services/api';
+import { getMediaUrl } from '../utils/url';
 
 const Explore = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const Explore = () => {
           originalId: p.id,
           username: p.username,
           caption: p.caption,
-          image: p.media && p.media.length > 0 ? (p.media[0].file.startsWith('http') ? p.media[0].file : `${import.meta.env.VITE_API_URL}${p.media[0].file}`) : "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=400&q=80",
+          image: p.media && p.media.length > 0 ? getMediaUrl(p.media[0].file) : "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=400&q=80",
           likes: p.likes_count || 0,
           comments: p.comments_count || 0,
           is_reel: false
@@ -39,7 +40,7 @@ const Explore = () => {
           originalId: r.id,
           username: r.username,
           caption: r.caption,
-          image: r.video ? (r.video.startsWith('http') ? r.video : `${import.meta.env.VITE_API_URL}${r.video}`) : "https://images.unsplash.com/photo-1541462608141-275d72e4bc02?auto=format&fit=crop&w=600&q=80",
+          image: r.video ? getMediaUrl(r.video) : "https://images.unsplash.com/photo-1541462608141-275d72e4bc02?auto=format&fit=crop&w=600&q=80",
           likes: r.likes_count || 0,
           comments: r.comments_count || 0,
           is_reel: true

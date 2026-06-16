@@ -8,6 +8,7 @@ import GlowCard from '../components/GlowCard';
 import CyberButton from '../components/CyberButton';
 import CyberInput from '../components/CyberInput';
 import api from '../services/api';
+import { getAvatarUrl, getMediaUrl } from '../utils/url';
 
 const CURATED_SONGS = [
   { id: '1', title: 'Lofi Dreams', artist: 'Chillhop Society', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
@@ -384,21 +385,7 @@ const HomeFeed = () => {
     }
   };
   
-  const getAvatarUrl = (avatar) => {
-    if (!avatar) return null;
-    if (avatar.startsWith('http://') || avatar.startsWith('https://')) {
-      return avatar;
-    }
-    return `${import.meta.env.VITE_API_URL}${avatar}`;
-  };
 
-  const getMediaUrl = (fileUrl) => {
-    if (!fileUrl) return '';
-    if (fileUrl.startsWith('http://') || fileUrl.startsWith('https://')) {
-      return fileUrl;
-    }
-    return `${import.meta.env.VITE_API_URL}${fileUrl}`;
-  };
 
   const myAvatarUrl = getAvatarUrl(user?.profile?.avatar);
   const myInitial = myUsername[0]?.toUpperCase() || '?';
@@ -438,9 +425,9 @@ const HomeFeed = () => {
       setReels(data.map(r => ({
         id: r.id,
         username: r.username,
-        avatar: r.avatar ? (r.avatar.startsWith('http') ? r.avatar : `${import.meta.env.VITE_API_URL}${r.avatar}`) : null,
+        avatar: getAvatarUrl(r.avatar),
         caption: r.caption,
-        video: r.video ? (r.video.startsWith('http') ? r.video : `${import.meta.env.VITE_API_URL}${r.video}`) : '',
+        video: getMediaUrl(r.video),
         likes: r.likes_count || 0,
         comments: r.comments_count || 0,
         has_liked: r.has_liked || false,

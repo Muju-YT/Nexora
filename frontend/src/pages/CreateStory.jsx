@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import useAuthStore from '../store/authStore';
 import api from '../services/api';
+import { getAvatarUrl } from '../utils/url';
 import {
   TEXT_STYLES, TEXT_SIZE_VALUES, TEXT_SIZE_LABELS, SONG_LIBRARY, snapAngle,
 } from '../constants/storyConstants';
@@ -279,9 +280,7 @@ const CreateStory = () => {
   const [isPosting, setIsPosting]     = useState(false);
   const [posted, setPosted]           = useState(false);
 
-  const myAvatarUrl = user?.profile?.avatar
-    ? (user.profile.avatar.startsWith('http') ? user.profile.avatar : `${import.meta.env.VITE_API_URL}${user.profile.avatar}`)
-    : null;
+  const myAvatarUrl = getAvatarUrl(user?.profile?.avatar);
   const myUsername  = user?.username || 'You';
   const myInitial   = myUsername[0]?.toUpperCase() || '?';
 

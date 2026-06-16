@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import GlowCard from '../components/GlowCard';
 import api from '../services/api';
+import { getAvatarUrl } from '../utils/url';
 import useAuthStore from '../store/authStore';
 
 /* ─── icon + colour per notification type ──────────────────────────────── */
@@ -122,11 +123,7 @@ const Notifications = () => {
 
   const unreadCount = notifications.filter(n => !n.is_read).length;
 
-  /* ── Helpers ─────────────────────────────────────────────────────────── */
-  const getAvatarUrl = (url) => {
-    if (!url) return null;
-    return url.startsWith('http') ? url : `${import.meta.env.VITE_API_URL}${url}`;
-  };
+
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-6 flex flex-col gap-5 select-none">

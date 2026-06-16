@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { Home, Search, PlusSquare, Heart, MessageCircle, Film, Compass, Settings, Sun, Moon, LogOut } from 'lucide-react';
 import { motion } from 'framer-motion';
 import useAuthStore from '../store/authStore';
+import { getAvatarUrl } from '../utils/url';
 
 const FloatNavbar = () => {
   const navigate = useNavigate();
@@ -27,13 +28,7 @@ const FloatNavbar = () => {
     }
   }, [isAuthenticated]);
 
-  const getAvatarUrl = (avatar) => {
-    if (!avatar) return null;
-    if (avatar.startsWith('http://') || avatar.startsWith('https://')) {
-      return avatar;
-    }
-    return `${import.meta.env.VITE_API_URL}${avatar}`;
-  };
+
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');

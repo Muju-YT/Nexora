@@ -21,6 +21,7 @@ import {
 import GlowCard from '../components/GlowCard';
 import useAuthStore from '../store/authStore';
 import api from '../services/api';
+import { getAvatarUrl, getMediaUrl } from '../utils/url';
 
 const ALL_EMOJIS = [
   '❤️', '🙌', '🔥', '👏', '😂', '😍', '😢', '😮',
@@ -322,9 +323,9 @@ const ReelsFeed = () => {
         const mappedDbReels = dbReels.map(r => ({
           id: r.id,
           username: r.username,
-          avatar: r.avatar ? (r.avatar.startsWith('http') ? r.avatar : `${import.meta.env.VITE_API_URL}${r.avatar}`) : null,
+          avatar: getAvatarUrl(r.avatar),
           caption: r.caption,
-          media: r.video ? (r.video.startsWith('http') ? r.video : `${import.meta.env.VITE_API_URL}${r.video}`) : '',
+          media: getMediaUrl(r.video),
           audio: `${r.username} · Original Audio`,
           likes: r.likes_count || 0,
           comments: r.comments_count || 0,
@@ -629,8 +630,8 @@ const ReelsFeed = () => {
         const otherMember = room.members?.find(m => m.username !== authUser?.username);
         const title = room.is_group ? room.title : (otherMember?.username || 'Chat');
         const avatar = room.is_group 
-          ? (room.avatar ? (room.avatar.startsWith('http') ? room.avatar : `${import.meta.env.VITE_API_URL}${room.avatar}`) : null) 
-          : (otherMember?.avatar ? (otherMember.avatar.startsWith('http') ? otherMember.avatar : `${import.meta.env.VITE_API_URL}${otherMember.avatar}`) : null);
+          ? getAvatarUrl(room.avatar) 
+          : getAvatarUrl(otherMember?.avatar);
 
         return {
           id: room.id,
@@ -830,7 +831,7 @@ const ReelsFeed = () => {
                       {/* Avatar */}
                       {comment.avatar ? (
                         <img 
-                          src={comment.avatar.startsWith('http') ? comment.avatar : `${import.meta.env.VITE_API_URL}${comment.avatar}`} 
+                          src={getAvatarUrl(comment.avatar)} 
                           alt="Commenter" 
                           className="w-8 h-8 rounded-full border border-obsidian-border object-cover flex-shrink-0"
                         />

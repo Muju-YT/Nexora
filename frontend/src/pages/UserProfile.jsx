@@ -6,6 +6,7 @@ import GlowCard from '../components/GlowCard';
 import CyberButton from '../components/CyberButton';
 import useAuthStore from '../store/authStore';
 import api from '../services/api';
+import { getAvatarUrl, getMediaUrl } from '../utils/url';
 
 const FALLBACK_COVER = "https://images.unsplash.com/photo-1541462608141-275d72e4bc02?auto=format&fit=crop&w=800&q=80";
 
@@ -68,22 +69,6 @@ const UserProfile = () => {
     loadingSaved,
     activeTab
   });
-
-  const getAvatarUrl = (avatar) => {
-    if (!avatar) return null;
-    if (avatar.startsWith('http://') || avatar.startsWith('https://')) {
-      return avatar;
-    }
-    return `${import.meta.env.VITE_API_URL}${avatar}`;
-  };
-
-  const getMediaUrl = (fileUrl) => {
-    if (!fileUrl) return '';
-    if (fileUrl.startsWith('http://') || fileUrl.startsWith('https://')) {
-      return fileUrl;
-    }
-    return `${import.meta.env.VITE_API_URL}${fileUrl}`;
-  };
 
   useEffect(() => {
     const loadProfileData = async () => {

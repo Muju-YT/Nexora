@@ -6,6 +6,7 @@ import GlowCard from '../components/GlowCard';
 import CyberButton from '../components/CyberButton';
 import useAuthStore from '../store/authStore';
 import useChatStore from '../store/chatStore';
+import { getAvatarUrl } from '../utils/url';
 
 const ChatList = () => {
   const navigate = useNavigate();
@@ -21,11 +22,6 @@ const ChatList = () => {
 
     return () => clearInterval(pollInterval);
   }, []);
-
-  const getAvatarUrl = (url) => {
-    if (!url) return null;
-    return url.startsWith('http') ? url : `${import.meta.env.VITE_API_URL}${url}`;
-  };
 
   const formatTime = (timeStr) => {
     if (!timeStr) return '';

@@ -4,6 +4,7 @@ import { Send, ArrowLeft, MoreVertical, Phone, Video, Smile, CheckCircle2, Image
 import { motion, AnimatePresence } from 'framer-motion';
 import useChatStore from '../store/chatStore';
 import useAuthStore from '../store/authStore';
+import { getAvatarUrl } from '../utils/url';
 
 const ALL_EMOJIS = [
   '❤️', '🙌', '🔥', '👏', '😂', '😍', '😢', '😮',
@@ -102,10 +103,7 @@ const ChatWindow = () => {
     }, 600);
   };
 
-  const getAvatarUrl = (url) => {
-    if (!url) return null;
-    return url.startsWith('http') ? url : `${import.meta.env.VITE_API_URL}${url}`;
-  };
+
 
   const formatTime = (timeStr) => {
     if (!timeStr) return '';

@@ -28,6 +28,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import useAuthStore from '../store/authStore';
 import api from '../services/api';
+import { getAvatarUrl } from '../utils/url';
 
 const CURATED_SONGS = [
   { id: '1', title: 'Lofi Dreams', artist: 'Chillhop Society', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
@@ -81,13 +82,7 @@ const CreatePost = () => {
   // Profile data mappings
   const myUsername = user?.username || 'you';
   
-  const getAvatarUrl = (avatar) => {
-    if (!avatar) return null;
-    if (avatar.startsWith('http://') || avatar.startsWith('https://')) {
-      return avatar;
-    }
-    return `${import.meta.env.VITE_API_URL}${avatar}`;
-  };
+
 
   const myAvatarUrl = getAvatarUrl(user?.profile?.avatar);
   const myInitial = myUsername[0]?.toUpperCase() || '?';

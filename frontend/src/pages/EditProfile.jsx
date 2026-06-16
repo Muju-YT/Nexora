@@ -6,6 +6,7 @@ import CyberButton from '../components/CyberButton';
 import GlowCard from '../components/GlowCard';
 import api from '../services/api';
 import useAuthStore from '../store/authStore';
+import { getAvatarUrl } from '../utils/url';
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -32,14 +33,6 @@ const EditProfile = () => {
   // AI assistant states
   const [loadingAi, setLoadingAi] = useState(false);
   const [aiInterests, setAiInterests] = useState('');
-
-  const getAvatarUrl = (avatar) => {
-    if (!avatar) return null;
-    if (avatar.startsWith('http://') || avatar.startsWith('https://')) {
-      return avatar;
-    }
-    return `${import.meta.env.VITE_API_URL}${avatar}`;
-  };
 
   useEffect(() => {
     const fetchCurrentProfile = async () => {

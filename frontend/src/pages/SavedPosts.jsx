@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Bookmark, ArrowLeft, Music, Heart, MessageCircle, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../services/api';
+import { getMediaUrl } from '../utils/url';
 
 const SavedPosts = () => {
   const navigate = useNavigate();
@@ -10,14 +11,6 @@ const SavedPosts = () => {
   const [savedReels, setSavedReels] = useState([]);
   const [activeSubTab, setActiveSubTab] = useState('posts');
   const [loading, setLoading] = useState(true);
-
-  const getMediaUrl = (fileUrl) => {
-    if (!fileUrl) return '';
-    if (fileUrl.startsWith('http://') || fileUrl.startsWith('https://')) {
-      return fileUrl;
-    }
-    return `${import.meta.env.VITE_API_URL}${fileUrl}`;
-  };
 
   useEffect(() => {
     const fetchSavedItems = async () => {
