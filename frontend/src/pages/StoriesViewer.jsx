@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Heart, Music, Send, Eye, ChevronDown, ChevronLeft, ChevronRight, Trash2 } from 'lucide-react';
 import api from '../services/api';
+import { getMediaUrl } from '../utils/url';
 import useAuthStore from '../store/authStore';
 import { TEXT_STYLES, TEXT_SIZE_VALUES } from '../constants/storyConstants';
 
@@ -37,10 +38,7 @@ const StoriesViewer = () => {
   const startRef  = useRef(null);
   const elapsedRef = useRef(0);
 
-  const getUrl = (url) => {
-    if (!url) return '';
-    return url.startsWith('http') ? url : `${import.meta.env.VITE_API_URL}${url}`;
-  };
+
 
   const myUsername = user?.username || '';
 
@@ -380,8 +378,8 @@ const StoriesViewer = () => {
 
   const expiresAt     = activeStory.expires_at ? new Date(activeStory.expires_at) : new Date(Date.now() + 86400000);
   const hoursLeft     = Math.max(0, Math.round((expiresAt - Date.now()) / 3600000));
-  const avatarUrl     = getUrl(activeStory.avatar);
-  const mediaUrl      = getUrl(activeStory.media);
+  const avatarUrl     = getMediaUrl(activeStory.avatar);
+  const mediaUrl      = getMediaUrl(activeStory.media);
   const isVideo       = activeStory.media_type === 'video';
   const hasMusicBadge = activeStory.song_name;
   const hasText       = activeStory.text_overlay;
@@ -714,7 +712,7 @@ const StoriesViewer = () => {
                         className="flex items-center gap-3"
                       >
                         {v.avatar
-                          ? <img src={getUrl(v.avatar)} alt={v.username} className="w-9 h-9 rounded-full object-cover border border-white/15" />
+                          ? <img src={getMediaUrl(v.avatar)} alt={v.username} className="w-9 h-9 rounded-full object-cover border border-white/15" />
                           : <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#FCAF45] via-[#E1306C] to-[#C13584] flex items-center justify-center text-sm font-black text-white">
                               {v.username?.[0]?.toUpperCase()}
                             </div>
