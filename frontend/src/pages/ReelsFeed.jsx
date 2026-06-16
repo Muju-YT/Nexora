@@ -286,7 +286,7 @@ const ReelCard = ({
 const ReelsFeed = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user: authUser } = useAuthStore();
+  const { user: authUser, isAuthenticated } = useAuthStore();
   const [activeReelIndex, setActiveReelIndex] = useState(0);
   const [likedStatus, setLikedStatus] = useState({});
   const [savedStatus, setSavedStatus] = useState({});
@@ -449,8 +449,10 @@ const ReelsFeed = () => {
       }
     };
 
-    fetchReels();
-  }, []);
+    if (isAuthenticated) {
+      fetchReels();
+    }
+  }, [isAuthenticated]);
 
   // Track dynamic views on active reel change
   useEffect(() => {

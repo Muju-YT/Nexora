@@ -4,9 +4,11 @@ import { Heart, MessageCircle, Play, Compass, Search, Loader2 } from 'lucide-rea
 import { motion } from 'framer-motion';
 import api from '../services/api';
 import { getMediaUrl } from '../utils/url';
+import useAuthStore from '../store/authStore';
 
 const Explore = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuthStore();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -93,8 +95,10 @@ const Explore = () => {
       }
     };
 
-    fetchExploreData();
-  }, []);
+    if (isAuthenticated) {
+      fetchExploreData();
+    }
+  }, [isAuthenticated]);
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-6 flex flex-col gap-6 select-none">

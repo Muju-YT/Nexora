@@ -40,6 +40,7 @@ const isVideoUrl = (url) => {
 
 const Notifications = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuthStore();
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading]             = useState(true);
   const [filter, setFilter]               = useState('all'); // all | unread | story
@@ -64,8 +65,10 @@ const Notifications = () => {
   };
 
   useEffect(() => {
-    fetchNotifications();
-  }, []);
+    if (isAuthenticated) {
+      fetchNotifications();
+    }
+  }, [isAuthenticated]);
 
   /* ── Actions ─────────────────────────────────────────────────────────── */
   const handleMarkAllRead = async () => {

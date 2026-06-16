@@ -25,7 +25,7 @@ const ChatWindow = () => {
     fetchMessages,
     reactToMessage
   } = useChatStore();
-  const { user } = useAuthStore();
+  const { user, isAuthenticated } = useAuthStore();
 
   const [inputVal, setInputVal] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
@@ -59,6 +59,7 @@ const ChatWindow = () => {
   }, [messages]);
 
   useEffect(() => {
+    if (!isAuthenticated) return;
     const loadChatData = async () => {
       await fetchActiveRoom(roomId);
       await fetchMessages(roomId);
@@ -73,7 +74,7 @@ const ChatWindow = () => {
     }, 20000);
 
     return () => clearInterval(pollInterval);
-  }, [roomId]);
+  }, [roomId, isAuthenticated]);
 
   const handleEmojiClick = (emoji) => {
     if (inputRef.current) {

@@ -4,9 +4,11 @@ import { Bookmark, ArrowLeft, Music, Heart, MessageCircle, Play } from 'lucide-r
 import { motion } from 'framer-motion';
 import api from '../services/api';
 import { getMediaUrl } from '../utils/url';
+import useAuthStore from '../store/authStore';
 
 const SavedPosts = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuthStore();
   const [savedPosts, setSavedPosts] = useState([]);
   const [savedReels, setSavedReels] = useState([]);
   const [activeSubTab, setActiveSubTab] = useState('posts');
@@ -34,8 +36,10 @@ const SavedPosts = () => {
       }
     };
 
-    fetchSavedItems();
-  }, []);
+    if (isAuthenticated) {
+      fetchSavedItems();
+    }
+  }, [isAuthenticated]);
 
   if (loading) {
     return (

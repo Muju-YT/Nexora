@@ -13,7 +13,7 @@ const FALLBACK_COVER = "https://images.unsplash.com/photo-1541462608141-275d72e4
 const UserProfile = () => {
   const navigate = useNavigate();
   const { username } = useParams();
-  const { user: authUser } = useAuthStore();
+  const { user: authUser, isAuthenticated } = useAuthStore();
 
   const [isFollowing, setIsFollowing] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);
@@ -123,8 +123,10 @@ const UserProfile = () => {
       }
     };
 
-    loadProfileData();
-  }, [targetUsername, authUser]);
+    if (isAuthenticated) {
+      loadProfileData();
+    }
+  }, [targetUsername, authUser, isAuthenticated]);
 
   const handleFollow = async () => {
     if (!targetUsername) return;

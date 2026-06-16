@@ -10,10 +10,11 @@ import { getAvatarUrl } from '../utils/url';
 
 const ChatList = () => {
   const navigate = useNavigate();
-  const { user } = useAuthStore();
+  const { user, isAuthenticated } = useAuthStore();
   const { rooms, fetchRooms } = useChatStore();
 
   useEffect(() => {
+    if (!isAuthenticated) return;
     fetchRooms();
 
     const pollInterval = setInterval(() => {
@@ -21,7 +22,7 @@ const ChatList = () => {
     }, 20000);
 
     return () => clearInterval(pollInterval);
-  }, []);
+  }, [isAuthenticated]);
 
   const formatTime = (timeStr) => {
     if (!timeStr) return '';

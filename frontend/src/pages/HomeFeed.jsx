@@ -234,7 +234,7 @@ const InlineReelCard = ({
 
 const HomeFeed = () => {
   const navigate = useNavigate();
-  const { user, theme, setTheme, unreadMessagesCount, unreadNotificationsCount } = useAuthStore();
+  const { user, theme, setTheme, unreadMessagesCount, unreadNotificationsCount, isAuthenticated } = useAuthStore();
   const { rooms, fetchRooms } = useChatStore();
 
   // Single-instance active audio player states & ref
@@ -454,13 +454,15 @@ const HomeFeed = () => {
   };
 
   useEffect(() => {
+    if (!isAuthenticated) return;
     fetchPosts();
     fetchReels();
-  }, []);
+  }, [isAuthenticated]);
 
   useEffect(() => {
+    if (!isAuthenticated) return;
     fetchStories();
-  }, []);
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (!loadingPosts && posts.length > 0) {

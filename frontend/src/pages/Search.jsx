@@ -8,7 +8,7 @@ import GlowCard from '../components/GlowCard';
 
 const Search = () => {
   const navigate = useNavigate();
-  const { user: authUser } = useAuthStore();
+  const { user: authUser, isAuthenticated } = useAuthStore();
   const [query, setQuery] = useState('');
   const [profiles, setProfiles] = useState([]);
   const [followedStatus, setFollowedStatus] = useState({});
@@ -38,8 +38,10 @@ const Search = () => {
         setLoading(false);
       }
     };
-    fetchProfiles();
-  }, [authUser]);
+    if (isAuthenticated) {
+      fetchProfiles();
+    }
+  }, [authUser, isAuthenticated]);
 
   const toggleFollow = async (username) => {
     try {
