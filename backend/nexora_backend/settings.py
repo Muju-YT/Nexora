@@ -237,6 +237,8 @@ USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PORT = True
 
 # Cloud storage configurations (Cloudinary)
+import cloudinary
+
 CLOUDINARY_CLOUD_NAME = os.getenv('CLOUDINARY_CLOUD_NAME')
 CLOUDINARY_API_KEY = os.getenv('CLOUDINARY_API_KEY')
 CLOUDINARY_API_SECRET = os.getenv('CLOUDINARY_API_SECRET')
@@ -246,6 +248,12 @@ CLOUDINARY_STORAGE = {
     'API_KEY': CLOUDINARY_API_KEY or '',
     'API_SECRET': CLOUDINARY_API_SECRET or '',
 }
+
+cloudinary.config(
+    cloud_name=CLOUDINARY_CLOUD_NAME,
+    api_key=CLOUDINARY_API_KEY,
+    api_secret=CLOUDINARY_API_SECRET,
+)
 
 STORAGES = {
     'default': {

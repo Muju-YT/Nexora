@@ -36,10 +36,20 @@ def get_absolute_media_url(url, request=None):
 
 class AbsoluteFileField(serializers.FileField):
     def to_representation(self, value):
-        url = super().to_representation(value)
+        if not value:
+            return None
+        try:
+            url = value.url
+        except Exception:
+            return None
         return get_absolute_media_url(url, self.context.get('request'))
         
 class AbsoluteImageField(serializers.ImageField):
     def to_representation(self, value):
-        url = super().to_representation(value)
+        if not value:
+            return None
+        try:
+            url = value.url
+        except Exception:
+            return None
         return get_absolute_media_url(url, self.context.get('request'))
