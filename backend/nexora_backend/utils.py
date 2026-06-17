@@ -39,7 +39,7 @@ class AbsoluteFileField(serializers.FileField):
         if not value:
             return None
         try:
-            url = value.url
+            url = super().to_representation(value)
         except Exception:
             return None
         return get_absolute_media_url(url, self.context.get('request'))
@@ -49,7 +49,7 @@ class AbsoluteImageField(serializers.ImageField):
         if not value:
             return None
         try:
-            url = value.url
+            url = super().to_representation(value)
         except Exception:
             return None
         return get_absolute_media_url(url, self.context.get('request'))

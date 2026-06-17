@@ -148,12 +148,17 @@ class StoryViewSet(viewsets.ModelViewSet):
         if story.user != request.user:
             return Response({'error': 'Not authorized'}, status=status.HTTP_403_FORBIDDEN)
         viewers = story.viewers.select_related('user__profile').all()
-        data = [
-            {
+        data = []
+        for v in viewers:
+            avatar_url = None
+            if v.user.profile.avatar:
+                try:
+                    avatar_url = request.build_absolute_uri(v.user.profile.avatar.url)
+                except Exception:
+                    pass
+            data.append({
                 'username': v.user.username,
-                'avatar': request.build_absolute_uri(v.user.profile.avatar.url) if v.user.profile.avatar else None,
+                'avatar': avatar_url,
                 'viewed_at': v.viewed_at,
-            }
-            for v in viewers
-        ]
+            })
         return Response({'count': len(data), 'viewers': data})
