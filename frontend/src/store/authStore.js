@@ -151,7 +151,9 @@ const useAuthStore = create((set, get) => ({
       set({ user: res.data, isAuthenticated: true, loading: false });
       get().fetchUnreadCounts();
     } catch (err) {
-      if (err.response?.status === 401 || err.response?.status === 403) {
+      if (err.response) {
+        // If the server responded with an error (e.g. 401, 403, 400, 500)
+        // the token is invalid, expired, or the user is deleted. Clear session.
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         set({ user: null, isAuthenticated: false, loading: false });
