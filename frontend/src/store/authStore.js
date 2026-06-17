@@ -145,21 +145,21 @@ const useAuthStore = create((set, get) => ({
       set({ isAuthenticated: false, loading: false });
       return;
     }
-    set({ loading: true });
+    set({ loading: true, error: null });
     try {
       const res = await api.get('/auth/me/');
       set({ user: res.data, isAuthenticated: true, loading: false });
       get().fetchUnreadCounts();
     } catch (err) {
-      if (err.response) {
-        // If the server responded with an error (e.g. 401, 403, 400, 500)
-        // the token is invalid, expired, or the user is deleted. Clear session.
+      if (err.response?.status === 401 || err.response?.status === 403) {
+        // Clear invalid / expired session
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
-        set({ user: null, isAuthenticated: false, loading: false });
+        set({ user: null, isAuthenticated: false, loading: false, error: 'Session expired. Please log in again.' });
       } else {
-        // Keep tokens for retry if it was a network timeout or temporary server issue
-        set({ isAuthenticated: false, loading: false });
+        // Keep tokens and stay authenticated on temporary server or network issue
+        const errMsg = err.response?.data?.detail || err.message || 'Server is starting up or temporarily unavailable.';
+        set({ isAuthenticated: true, loading: false, error: errMsg });
       }
     }
   },
