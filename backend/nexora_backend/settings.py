@@ -32,13 +32,13 @@ INSTALLED_APPS = [
     # ASGI daphne app must go before staticfiles
     'daphne',
     'channels',
+    'cloudinary_storage',
     
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
     
@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'apps.notifications',
     'apps.ai_features',
     'apps.moderation',
+
 ]
 
 MIDDLEWARE = [
@@ -250,6 +251,7 @@ CLOUDINARY_STORAGE = {
     'CLOUD_NAME': CLOUDINARY_CLOUD_NAME,
     'API_KEY': CLOUDINARY_API_KEY,
     'API_SECRET': CLOUDINARY_API_SECRET,
+    'PREFIX': '',
 }
 
 cloudinary.config(
@@ -258,11 +260,13 @@ cloudinary.config(
     api_secret=CLOUDINARY_API_SECRET,
 )
 
-STORAGES = {
-    'default': {
-        'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage',
-    },
-    'staticfiles': {
-        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
-    },
-}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# STORAGES = {
+#     'default': {
+#         'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage',
+#     },
+#     'staticfiles': {
+#         'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+#     },
+# }

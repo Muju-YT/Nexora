@@ -13,18 +13,19 @@ from apps.stories.models import Story
 
 User = get_user_model()
 
+from django.core.files import File
+
 def upload_file_if_exists(field, local_rel_path):
     if not field or not local_rel_path:
         return False
     
     # Check if the file is already uploaded to Cloudinary
     try:
-        url = field.url
-        if url.startswith(('http://', 'https://')) and 'cloudinary' in url:
-            print(f"Skipping {field.name} - already on Cloudinary: {url}")
+        if default_storage.exists(field.name):
+            print(f"Skipping {field.name} - already on Cloudinary")
             return True
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"Error checking if {field.name} exists in storage: {e}")
         
     # Check if the file exists in the local media directory
     local_path = os.path.join('media', local_rel_path)
@@ -32,9 +33,10 @@ def upload_file_if_exists(field, local_rel_path):
         print(f"Found local file for {field.name}: {local_path}. Uploading to Cloudinary...")
         try:
             with open(local_path, 'rb') as f:
-                # Save to the configured default storage (Cloudinary)
-                saved_name = default_storage.save(local_rel_path, f)
-                print(f"Successfully uploaded to Cloudinary as: {saved_name}")
+                # Save to the configured default storage (Cloudinary) and update DB record
+                filename = os.path.basename(local_rel_path)
+                field.save(filename, File(f), save=True)
+                print(f"Successfully uploaded to Cloudinary as: {field.name}")
                 return True
         except Exception as e:
             print(f"Failed to upload {local_path}: {e}")
