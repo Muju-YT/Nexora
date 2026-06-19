@@ -285,13 +285,13 @@ const UserProfile = () => {
                 <>
                   <button
                     onClick={() => navigate('/edit-profile')}
-                    className="px-6 py-2 rounded-xl bg-obsidian-light hover:bg-[#262626] border border-obsidian-border text-xs font-bold text-white cursor-pointer transition-colors"
+                    className="px-6 py-2 rounded-xl bg-obsidian-light hover:bg-obsidian-hover border border-obsidian-border text-xs font-bold text-white cursor-pointer transition-colors"
                   >
                     Edit Profile
                   </button>
                   <button
                     onClick={() => navigate('/settings')}
-                    className="p-2 rounded-xl border border-obsidian-border bg-obsidian-light hover:bg-[#262626] text-slate-400 hover:text-white transition-colors cursor-pointer"
+                    className="p-2 rounded-xl border border-obsidian-border bg-obsidian-light hover:bg-obsidian-hover text-slate-400 hover:text-white transition-colors cursor-pointer"
                   >
                     <SettingsIcon className="w-4.5 h-4.5" />
                   </button>
@@ -627,7 +627,7 @@ const UserProfile = () => {
                 </span>
                 <button
                   onClick={() => setModalOpen(false)}
-                  className="text-xs font-bold text-slate-400 hover:text-white uppercase tracking-widest px-3 py-1 bg-obsidian-light rounded-lg cursor-pointer hover:bg-[#262626] transition-colors"
+                  className="text-xs font-bold text-slate-400 hover:text-white uppercase tracking-widest px-3 py-1 bg-obsidian-light rounded-lg cursor-pointer hover:bg-obsidian-hover transition-colors"
                 >
                   Close
                 </button>

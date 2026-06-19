@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import useAuthStore from '../store/authStore';
 import CyberInput from '../components/CyberInput';
 import CyberButton from '../components/CyberButton';
@@ -14,6 +14,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [isLocalLoading, setIsLocalLoading] = useState(false);
 
   // Redirect to Home Feed if already authenticated
   useEffect(() => {
@@ -24,15 +25,71 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLocalLoading(true);
     const result = await login(email, password);
+    setIsLocalLoading(false);
     if (result.success) {
       navigate('/');
     }
   };
 
-
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden bg-obsidian">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.45, ease: 'easeOut' }}
+      className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden bg-obsidian w-full"
+    >
+      {/* Full-screen Loading Overlay */}
+      <AnimatePresence>
+        {isLocalLoading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-obsidian/90 backdrop-blur-md z-[9999] flex flex-col items-center justify-center gap-6"
+          >
+            <div className="relative flex items-center justify-center w-48 h-48">
+              {/* Rotating glowing circle loader */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 1.5, ease: 'linear' }}
+                className="absolute w-36 h-36 rounded-full border-[3px] border-obsidian-border border-t-cyber-pink border-r-cyber-violet shadow-[0_0_20px_rgba(225,48,108,0.25)]"
+              />
+              
+              {/* Secondary counter-rotating circle for a premium complex feeling */}
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ repeat: Infinity, duration: 2.5, ease: 'linear' }}
+                className="absolute w-40 h-40 rounded-full border border-dashed border-cyber-cyan/30"
+              />
+              
+              {/* Inner glowing pulse logo */}
+              <motion.div
+                animate={{ 
+                  scale: [1, 1.05, 1],
+                  opacity: [0.9, 1, 0.9]
+                }}
+                transition={{ 
+                  repeat: Infinity, 
+                  duration: 2.0, 
+                  ease: 'easeInOut' 
+                }}
+                className="z-10 text-center select-none"
+              >
+                <h1 className="text-4xl font-black italic tracking-tight bg-gradient-to-r from-[#FCAF45] via-[#E1306C] to-[#C13584] bg-clip-text text-transparent">
+                  Nexora
+                </h1>
+                <span className="text-[8px] font-black uppercase tracking-widest text-slate-500 mt-1 block animate-pulse">
+                  Connecting...
+                </span>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Background glowing gradients */}
       <div className="absolute w-[450px] h-[450px] rounded-full bg-cyber-pink/5 blur-[120px] -top-20 -left-20 animate-pulse" />
       <div className="absolute w-[450px] h-[450px] rounded-full bg-cyber-violet/5 blur-[120px] -bottom-20 -right-20 animate-pulse" />
@@ -93,7 +150,8 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 text-slate-500 hover:text-white transition-colors cursor-pointer z-10"
+                  disabled={loading || isLocalLoading}
+                  className="absolute right-3.5 text-slate-500 hover:text-white transition-colors cursor-pointer z-10 disabled:opacity-50"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -104,9 +162,9 @@ const Login = () => {
               type="submit" 
               variant="pink" 
               className="mt-2 w-full py-3"
-              disabled={loading}
+              disabled={loading || isLocalLoading}
             >
-              {loading ? 'Logging in...' : 'Log In'}
+              {loading || isLocalLoading ? 'Logging in...' : 'Log In'}
             </CyberButton>
 
 
@@ -119,7 +177,7 @@ const Login = () => {
           </form>
         </GlowCard>
       </motion.div>
-    </div>
+    </motion.div>
   );
 };
 

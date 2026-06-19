@@ -727,7 +727,7 @@ const ReelsFeed = () => {
   );
 
   return (
-    <div className="min-h-screen bg-obsidian flex items-center justify-center p-0 md:p-6 overflow-hidden select-none relative">
+    <div className="min-h-screen bg-obsidian flex items-center justify-center p-0 md:p-6 overflow-hidden select-none relative forced-dark">
       
       {/* Mobile-first centered phone mockup frame on desktop screen */}
       <div 

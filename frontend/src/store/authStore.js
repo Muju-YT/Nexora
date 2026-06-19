@@ -151,15 +151,15 @@ const useAuthStore = create((set, get) => ({
       set({ user: res.data, isAuthenticated: true, loading: false });
       get().fetchUnreadCounts();
     } catch (err) {
-      if (err.response?.status === 401 || err.response?.status === 403) {
+      if (err.response?.status === 400 || err.response?.status === 401 || err.response?.status === 403) {
         // Clear invalid / expired session
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         set({ user: null, isAuthenticated: false, loading: false, error: 'Session expired. Please log in again.' });
       } else {
-        // Keep tokens and stay authenticated on temporary server or network issue
+        // Keep tokens in localStorage but set isAuthenticated to false on temporary server/network issue
         const errMsg = err.response?.data?.detail || err.message || 'Server is starting up or temporarily unavailable.';
-        set({ isAuthenticated: true, loading: false, error: errMsg });
+        set({ user: null, isAuthenticated: false, loading: false, error: errMsg });
       }
     }
   },

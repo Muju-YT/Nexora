@@ -91,7 +91,7 @@ const ChatList = () => {
         
         <button
           onClick={() => alert("Searching for users to start a chat...")}
-          className="p-2.5 rounded-xl bg-obsidian-light hover:bg-[#262626] border border-obsidian-border text-white cursor-pointer transition-colors"
+          className="p-2.5 rounded-xl bg-obsidian-light hover:bg-obsidian-hover border border-obsidian-border text-white cursor-pointer transition-colors"
         >
           <Plus className="w-5 h-5" />
         </button>

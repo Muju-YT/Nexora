@@ -701,7 +701,13 @@ const HomeFeed = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-4 md:py-6 flex flex-col md:flex-row gap-8 relative">
+    <motion.div 
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -15 }}
+      transition={{ duration: 0.45, ease: 'easeOut' }}
+      className="max-w-6xl mx-auto px-4 py-4 md:py-6 flex flex-col md:flex-row gap-8 relative w-full"
+    >
       
       {/* MOBILE ONLY TOP BAR HEADER */}
       <div className="md:hidden flex items-center justify-between border-b border-obsidian-border pb-3 mb-2 px-1">
@@ -1322,7 +1328,7 @@ const HomeFeed = () => {
                   <button
                     type="submit"
                     disabled={!newCommentText.trim()}
-                    className="p-3 bg-cyber-pink hover:bg-cyber-pink/85 disabled:opacity-40 disabled:hover:bg-cyber-pink text-white rounded-xl cursor-pointer transition-colors"
+                    className="p-3 bg-cyber-pink hover:bg-cyber-pink/85 disabled:opacity-40 disabled:hover:bg-cyber-pink text-always-white rounded-xl cursor-pointer transition-colors"
                   >
                     <Send className="w-4 h-4 rotate-45" />
                   </button>
@@ -1408,7 +1414,7 @@ const HomeFeed = () => {
                                 className="w-9 h-9 rounded-full object-cover border border-obsidian-border" 
                               />
                             ) : (
-                              <div className="w-9 h-9 rounded-full border border-obsidian-border bg-slate-700 flex items-center justify-center text-xs font-black text-white uppercase">
+                              <div className="w-9 h-9 rounded-full border border-obsidian-border bg-slate-700 flex items-center justify-center text-xs font-black text-always-white uppercase">
                                 {title?.[0] || '?'}
                               </div>
                             )}
@@ -1427,7 +1433,7 @@ const HomeFeed = () => {
                             className={`px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all duration-200 cursor-pointer ${
                               isSent 
                                 ? 'bg-cyber-emerald/10 border border-cyber-emerald/20 text-cyber-emerald font-bold' 
-                                : 'bg-[#0095F6] hover:bg-[#0095F6]/85 border border-[#0095F6]/20 text-white font-bold shadow-md'
+                                : 'bg-[#0095F6] hover:bg-[#0095F6]/85 border border-[#0095F6]/20 text-always-white font-bold shadow-md'
                             }`}
                           >
                             {isSent ? 'Sent ✓' : 'Send'}
@@ -1442,7 +1448,7 @@ const HomeFeed = () => {
         )}
       </AnimatePresence>
 
-    </div>
+    </motion.div>
   );
 };
 

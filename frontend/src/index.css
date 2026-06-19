@@ -5,6 +5,7 @@
   --obsidian-card-bg: #0F0F0F;
   --obsidian-border-color: #262626;
   --obsidian-light-bg: #1A1A1A;
+  --obsidian-hover-bg: #262626;
   --text-main: #FFFFFF;
   --text-muted: #A8A8A8;
   
@@ -20,6 +21,7 @@
   --obsidian-card-bg: #FFFFFF;
   --obsidian-border-color: #DBDBDB;
   --obsidian-light-bg: #F0F2F5;
+  --obsidian-hover-bg: #EAEAEA;
   --text-main: #000000;
   --text-muted: #737373;
   
@@ -31,6 +33,7 @@
   --color-obsidian-card: var(--obsidian-card-bg);
   --color-obsidian-border: var(--obsidian-border-color);
   --color-obsidian-light: var(--obsidian-light-bg);
+  --color-obsidian-hover: var(--obsidian-hover-bg);
 
   --color-cyber-violet: #C13584; /* Replaced neon purple with Brand Violet */
   --color-cyber-cyan: #0095F6; /* Replaced neon cyan with Social Blue */

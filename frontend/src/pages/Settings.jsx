@@ -44,7 +44,7 @@ const Settings = () => {
           </div>
           <button
             onClick={handleToggleTheme}
-            className="px-4 py-2 rounded-xl border border-obsidian-border bg-obsidian-light hover:bg-[#262626] text-xs font-bold text-white transition-colors cursor-pointer"
+            className="px-4 py-2 rounded-xl border border-obsidian-border bg-obsidian-light hover:bg-obsidian-hover text-xs font-bold text-white transition-colors cursor-pointer"
           >
             {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
           </button>

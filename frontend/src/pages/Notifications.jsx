@@ -158,7 +158,7 @@ const Notifications = () => {
         <div className="flex gap-2">
           <button
             onClick={handleMarkAllRead}
-            className="p-2.5 rounded-xl border border-obsidian-border bg-obsidian-light hover:bg-[#262626] text-slate-400 hover:text-white transition-colors cursor-pointer"
+            className="p-2.5 rounded-xl border border-obsidian-border bg-obsidian-light hover:bg-obsidian-hover text-slate-400 hover:text-white transition-colors cursor-pointer"
             title="Mark all as read"
           >
             <Check className="w-4 h-4" />

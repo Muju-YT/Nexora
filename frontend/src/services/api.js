@@ -80,9 +80,17 @@ api.interceptors.response.use(
         } catch (refreshError) {
           processQueue(refreshError, null);
           isRefreshing = false;
-          localStorage.removeItem('access_token');
-          localStorage.removeItem('refresh_token');
-          window.location.href = '/login';
+          
+          const isAuthError = refreshError.response && 
+            (refreshError.response.status === 400 || 
+             refreshError.response.status === 401 || 
+             refreshError.response.status === 403);
+             
+          if (isAuthError) {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+            window.location.href = '/login';
+          }
           return Promise.reject(refreshError);
         }
       }

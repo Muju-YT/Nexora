@@ -428,7 +428,7 @@ const ChatWindow = () => {
                 {/* Reaction Badges */}
                 {m.reactions && m.reactions.length > 0 && (
                   <div 
-                    className={`absolute -bottom-2.5 ${isSelf ? 'right-4' : 'left-4'} flex items-center gap-1 bg-[#1a1a1a]/95 backdrop-blur-md px-2 py-0.5 rounded-full border border-obsidian-border text-[9px] shadow-glass select-none pointer-events-auto cursor-pointer hover:scale-105 transition-transform z-10`}
+                    className={`absolute -bottom-2.5 ${isSelf ? 'right-4' : 'left-4'} flex items-center gap-1 bg-obsidian-light/95 backdrop-blur-md px-2 py-0.5 rounded-full border border-obsidian-border text-[9px] shadow-glass select-none pointer-events-auto cursor-pointer hover:scale-105 transition-transform z-10`}
                     onClick={(e) => { 
                       e.stopPropagation(); 
                       const myReaction = m.reactions.find(r => r.username === myUsername)?.reaction;
@@ -462,7 +462,7 @@ const ChatWindow = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="px-4 py-3 bg-[#121212] border-t border-obsidian-border flex items-center justify-between gap-4 max-w-3xl mx-auto w-full rounded-t-2xl shadow-glass"
+            className="px-4 py-3 bg-obsidian-card border-t border-obsidian-border flex items-center justify-between gap-4 max-w-3xl mx-auto w-full rounded-t-2xl shadow-glass"
           >
             <div className="flex items-center gap-3">
               {fileType === 'image' && previewUrl ? (
@@ -494,7 +494,7 @@ const ChatWindow = () => {
                 if (imageInputRef.current) imageInputRef.current.value = '';
                 if (fileInputRef.current) fileInputRef.current.value = '';
               }}
-              className="p-1.5 rounded-full bg-obsidian hover:bg-[#262626] text-slate-400 hover:text-white transition-colors cursor-pointer"
+              className="p-1.5 rounded-full bg-obsidian hover:bg-obsidian-hover text-slate-400 hover:text-white transition-colors cursor-pointer"
             >
               <span className="text-xs font-bold px-1.5 py-0.5">✕</span>
             </button>
@@ -595,7 +595,7 @@ const ChatWindow = () => {
           <button 
             type="submit"
             disabled={(!inputVal.trim() && !selectedFile) || isUploading}
-            className="p-3 bg-cyber-pink hover:bg-cyber-pink/85 disabled:opacity-40 disabled:hover:bg-cyber-pink text-white rounded-xl cursor-pointer transition-colors flex items-center justify-center min-w-[44px]"
+            className="p-3 bg-cyber-pink hover:bg-cyber-pink/85 disabled:opacity-40 disabled:hover:bg-cyber-pink text-always-white rounded-xl cursor-pointer transition-colors flex items-center justify-center min-w-[44px]"
           >
             {isUploading ? (
               <Loader2 className="w-4 h-4 animate-spin" />
