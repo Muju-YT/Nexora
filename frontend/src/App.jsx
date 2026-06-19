@@ -52,7 +52,7 @@ const ProtectedRoute = ({ children }) => {
 // Animated route wrapper
 const AnimatedRoutes = () => {
   const location = useLocation();
-  const { isAuthenticated, loadSession, theme, setTheme } = useAuthStore();
+  const { isAuthenticated, loadSession, theme, setTheme, isInitialized } = useAuthStore();
 
   useEffect(() => {
     loadSession();
@@ -74,6 +74,35 @@ const AnimatedRoutes = () => {
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
   };
+
+  if (!isInitialized) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-obsidian text-slate-100 bg-grid-cyber select-none relative overflow-hidden">
+        {/* Background glow node */}
+        <div className="absolute w-[400px] h-[400px] rounded-full bg-cyber-pink/5 blur-[100px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+        
+        <div className="flex flex-col items-center gap-6 z-10">
+          <div className="p-8 rounded-3xl border border-obsidian-border bg-obsidian-card shadow-glass relative flex items-center justify-center w-40 h-40">
+            {/* Spinning gradient ring */}
+            <div className="absolute w-32 h-32 rounded-full border-2 border-obsidian-border border-t-cyber-pink border-r-cyber-violet animate-spin" />
+            
+            {/* Pulsing branding logo */}
+            <div className="text-center animate-pulse z-10">
+              <h1 className="text-4xl font-black italic tracking-tight bg-gradient-to-r from-[#FCAF45] via-[#E1306C] to-[#C13584] bg-clip-text text-transparent px-2">
+                Nexora
+              </h1>
+            </div>
+          </div>
+          
+          <div className="flex flex-col gap-2 items-center">
+            <span className="text-[10px] font-black tracking-widest text-slate-400 uppercase animate-pulse">
+              Establishing Neural Link...
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`min-h-screen bg-obsidian text-slate-100 bg-grid-cyber transition-colors duration-300 ${showNav ? 'md:pl-64 pb-20 md:pb-0' : ''}`}>

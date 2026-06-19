@@ -5,6 +5,7 @@ const useAuthStore = create((set, get) => ({
   user: null,
   isAuthenticated: false,
   loading: !!localStorage.getItem('access_token'),
+  isInitialized: false,
   error: null,
   otpPending: false,
   otpPreview: null,
@@ -142,24 +143,24 @@ const useAuthStore = create((set, get) => ({
   loadSession: async () => {
     const token = localStorage.getItem('access_token');
     if (!token) {
-      set({ isAuthenticated: false, loading: false });
+      set({ isAuthenticated: false, loading: false, isInitialized: true });
       return;
     }
     set({ loading: true, error: null });
     try {
       const res = await api.get('/auth/me/');
-      set({ user: res.data, isAuthenticated: true, loading: false });
+      set({ user: res.data, isAuthenticated: true, loading: false, isInitialized: true });
       get().fetchUnreadCounts();
     } catch (err) {
       if (err.response?.status === 400 || err.response?.status === 401 || err.response?.status === 403) {
         // Clear invalid / expired session
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
-        set({ user: null, isAuthenticated: false, loading: false, error: 'Session expired. Please log in again.' });
+        set({ user: null, isAuthenticated: false, loading: false, isInitialized: true, error: 'Session expired. Please log in again.' });
       } else {
         // Keep tokens in localStorage but set isAuthenticated to false on temporary server/network issue
         const errMsg = err.response?.data?.detail || err.message || 'Server is starting up or temporarily unavailable.';
-        set({ user: null, isAuthenticated: false, loading: false, error: errMsg });
+        set({ user: null, isAuthenticated: false, loading: false, isInitialized: true, error: errMsg });
       }
     }
   },
