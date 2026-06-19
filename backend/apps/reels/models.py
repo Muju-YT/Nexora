@@ -1,11 +1,15 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from .storage import VideoCloudinaryStorage
 
 User = get_user_model()
 
 class Reel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reels')
-    video = models.FileField(upload_to='reels/')
+    video = models.FileField(
+        upload_to='reels/',
+        storage=VideoCloudinaryStorage()
+    )
     caption = models.TextField(blank=True, max_length=1000)
     views_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
