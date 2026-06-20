@@ -82,6 +82,36 @@ body {
   color: #000000 !important;
 }
 
+/* Light mode hover overrides to ensure text changes color properly on hover */
+.light :not(.forced-dark):not(.forced-dark *).hover\:text-white:hover,
+.light :not(.forced-dark):not(.forced-dark *).hover\:text-slate-50:hover,
+.light :not(.forced-dark):not(.forced-dark *).hover\:text-slate-100:hover,
+.light :not(.forced-dark):not(.forced-dark *).hover\:text-slate-200:hover {
+  color: #000000 !important;
+}
+.light :not(.forced-dark):not(.forced-dark *).hover\:text-slate-300:hover,
+.light :not(.forced-dark):not(.forced-dark *).hover\:text-slate-400:hover {
+  color: #262626 !important;
+}
+.light :not(.forced-dark):not(.forced-dark *).hover\:text-slate-500:hover {
+  color: #737373 !important;
+}
+.light :not(.forced-dark):not(.forced-dark *).hover\:text-cyber-cyan:hover {
+  color: var(--color-cyber-cyan) !important;
+}
+.light :not(.forced-dark):not(.forced-dark *).hover\:text-cyber-pink:hover {
+  color: var(--color-cyber-pink) !important;
+}
+.light :not(.forced-dark):not(.forced-dark *).hover\:text-cyber-violet:hover {
+  color: var(--color-cyber-violet) !important;
+}
+.light :not(.forced-dark):not(.forced-dark *).hover\:text-cyber-glow:hover {
+  color: var(--color-cyber-glow) !important;
+}
+.light :not(.forced-dark):not(.forced-dark *).hover\:text-red-500:hover {
+  color: #ef4444 !important;
+}
+
 /* Prevent Light mode overrides inside forced-dark containers */
 .light .forced-dark {
   --obsidian-bg: #000000;
